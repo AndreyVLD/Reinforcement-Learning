@@ -9,7 +9,7 @@ from State import State
 
 
 class Agent:
-    def __init__(self, start_x: int, start_y: int):
+    def __init__(self, start_x: int, start_y: int) -> None:
         self.start_x = start_x
         self.start_y = start_y
         self.x = start_x
@@ -23,7 +23,7 @@ class Agent:
         """
         return maze.get_state(self.x, self.y)
 
-    def get_valid_actions(self, maze: Maze):
+    def get_valid_actions(self, maze: Maze) -> list[Action]:
         """
         Returns a list of all valid actions for the agent.
         """

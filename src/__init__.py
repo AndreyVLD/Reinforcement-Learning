@@ -76,6 +76,8 @@ def run_agent(learner: Learner, maze: Maze, agent: Agent, n_episodes: int, explo
 
 def main() -> None:
     maze = Maze("./../data/easy_maze.txt")
+
+    # Locations of the rewards and end of the maze
     maze.set_reward(x=24, y=14, reward=10)
     maze.set_terminal(x=24, y=14)
 
@@ -92,7 +94,7 @@ def main() -> None:
 
     # Create a learner.
     params = {"lr": 0.7, "gamma": 0.9}
-    learner = SARSA(q_table, params)
+    learner = QLearning(q_table, params)
 
     n_runs = 10
     episodes = 300
@@ -101,6 +103,7 @@ def main() -> None:
     steps = []
     copy_arr = deepcopy(q_table)
 
+    # Training n different runs to evaluate average performance
     for _ in range(n_runs):
         episode_lengths, steps = run_agent(learner, maze, agent, episodes, exploration_strategy, 'greedy',
                                            0.3, 0.1)
@@ -108,8 +111,9 @@ def main() -> None:
 
         new_table = deepcopy(copy_arr)
         exploration_strategy = ExplorationStrategy(new_table)
-        learner = SARSA(new_table, params)
+        learner = QLearning(new_table, params)
 
+    # Plotting the trajectory of the agent
     plot_distances(all_episode_lengths)
     maze.visualize([])
     maze.visualize(steps)

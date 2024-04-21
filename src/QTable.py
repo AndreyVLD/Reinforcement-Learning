@@ -9,10 +9,6 @@ A q-table stores the q-values for each possible state-action pair.
 
 class QTable:
     def __init__(self, states: List[State], actions: List[Action], r_max: float, y: float):
-        """
-        This is a pessimistic initialization. Try an optimistic initialization instead: RMax / 1 - y.
-        """
-        initial_value = 0
         self.q_table = {s.id: {a.id: r_max / (1 - y) for a in actions} for s in states}
 
     def get_q(self, state: State, action: Action):
