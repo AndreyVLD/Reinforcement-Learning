@@ -15,6 +15,15 @@ class Learner(ABC):
     @abstractmethod
     def learn(self, possible_actions: List[Action], state: State, action: Action,
               next_state: State, reward: int, done: bool) -> None:
+        """
+        The learn method updates the q-values in the q-table based on the reward received
+        :param possible_actions: All the possible actions in the current state.
+        :param state: The current state.
+        :param action: The performed action.
+        :param next_state: The next state.
+        :param reward: The reward to be received.
+        :param done: If the episode is done.
+        """
         pass
 
 
