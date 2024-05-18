@@ -15,6 +15,16 @@ import numpy as np
 
 def choose_action(exploration_strategy: ExplorationStrategy, function: str, agent: Agent, maze: Maze,
                   temperature: float, epsilon: float) -> Action:
+    """
+    Choose an action based on the exploration strategy.
+    :param exploration_strategy: The exploration object that keeps track of what choices to make at each step.
+    :param function: The exploration strategy to use.
+    :param agent: The agent that is making the choice.
+    :param maze: The maze in which the agent is moving.
+    :param temperature: The temperature parameter for the Boltzmann exploration strategy.
+    :param epsilon: The epsilon parameter for the e-greedy exploration strategy.
+    :return: The next action to take.
+    """
     if function == 'boltzmann':
         action = exploration_strategy.boltzmann(agent, maze, temperature)
     elif function == 'uniform':
@@ -27,6 +37,11 @@ def choose_action(exploration_strategy: ExplorationStrategy, function: str, agen
 
 
 def plot_distances(all_episodes_lengths: list) -> None:
+    """
+    Plot the average number of steps per episode.
+    :param all_episodes_lengths: The lengths of all episodes.
+    :return: None, it plots the graph
+    """
     mlp.use('TkAgg')
     arr = np.array(all_episodes_lengths)
     arr_mean = np.mean(arr, axis=0)
@@ -40,6 +55,18 @@ def plot_distances(all_episodes_lengths: list) -> None:
 def run_agent(learner: Learner, maze: Maze, agent: Agent, n_episodes: int, exploration_strategy: ExplorationStrategy,
               function: str, temperature: float = 0.5, epsilon: float = 0.3) \
         -> tuple[list[Any], list[tuple[Any, Any]]]:
+    """
+    The main loop for running the agent in the maze.
+    :param learner: The learner object that keeps track of the Q-values.
+    :param maze: The maze in which the agent is moving.
+    :param agent: The agent that is moving in the maze.
+    :param n_episodes: The number of episodes to run the agent for.
+    :param exploration_strategy: The exploration strategy object that will keep track of the next action choice.
+    :param function: The exploration strategy to use.
+    :param temperature: The temperature parameter for the Boltzmann exploration strategy.
+    :param epsilon: The epsilon parameter for the e-greedy exploration strategy.
+    :return: The lengths of all episodes and the steps taken in the final episode, used for visualization.
+    """
     episode_lengths = []
     steps_final_episode = []
 
@@ -75,6 +102,9 @@ def run_agent(learner: Learner, maze: Maze, agent: Agent, n_episodes: int, explo
 
 
 def main() -> None:
+    """
+    The main function to run the agent in the maze.
+    """
     maze = Maze("./../data/easy_maze.txt")
 
     # Locations of the rewards and end of the maze
